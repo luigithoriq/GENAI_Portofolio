@@ -1,8 +1,11 @@
 ---
 import { contact } from '../data/profile';
 
+// Opens Gmail's compose window in a new tab with the address already filled in.
+const gmailCompose = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(contact.email)}`;
+
 const links = [
-  { label: 'Email', href: contact.email && `mailto:${contact.email}`, text: contact.email },
+  { label: 'Email', href: contact.email && gmailCompose, text: contact.email },
   { label: 'LinkedIn', href: contact.linkedin, text: contact.linkedin.replace(/^https?:\/\/(www\.)?/, '') },
   { label: 'GitHub', href: contact.github, text: contact.github.replace(/^https?:\/\//, '') },
 ].filter((l) => l.href);
@@ -14,26 +17,9 @@ const links = [
   <div>
     <p class="lead">I am happy to talk about research, course projects, or part-time work in AI and data. Email is the fastest way to reach me.</p>
 
-    <!-- No backend: the form builds a pre-filled email and hands it to the visitor's mail app. -->
-    <form class="mail-form panel" data-to={contact.email} novalidate>
-      <div class="field">
-        <label for="cf-name">Your name</label>
-        <input id="cf-name" name="name" type="text" autocomplete="name" required />
-      </div>
-      <div class="field">
-        <label for="cf-subject">Subject</label>
-        <input id="cf-subject" name="subject" type="text" placeholder="e.g. Research collaboration" required />
-      </div>
-      <div class="field">
-        <label for="cf-message">Message</label>
-        <textarea id="cf-message" name="message" rows="5" required></textarea>
-      </div>
-      <p class="status" role="status" aria-live="polite"></p>
-      <div class="actions">
-        <button type="submit">Write me an email</button>
-        <span class="hint">Opens your email app with this message filled in.</span>
-      </div>
-    </form>
+    <p class="cta">
+      <a class="mail-btn" href={gmailCompose} target="_blank" rel="noopener">Send me an email via Gmail</a>
+    </p>
 
     <dl class="links panel">
       {
@@ -52,36 +38,6 @@ const links = [
   </div>
 </section>
 
-<script>
-  document.addEventListener('astro:page-load', () => {
-    const form = document.querySelector<HTMLFormElement>('.mail-form');
-    if (!form) return;
-    const status = form.querySelector<HTMLElement>('.status')!;
-
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const fields = [...form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('input, textarea')];
-      const empty = fields.filter((f) => !f.value.trim());
-      fields.forEach((f) => f.setAttribute('aria-invalid', String(empty.includes(f))));
-
-      if (empty.length) {
-        status.dataset.state = 'error';
-        status.textContent = 'Please fill in every field before sending.';
-        empty[0].focus();
-        return;
-      }
-
-      const data = new FormData(form);
-      const subject = String(data.get('subject')).trim();
-      const body = `${String(data.get('message')).trim()}\n\n${String(data.get('name')).trim()}`;
-      window.location.href = `mailto:${form.dataset.to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
-      status.dataset.state = 'ok';
-      status.textContent = 'Your email app should open now. If nothing happens, use the email address below.';
-    });
-  });
-</script>
-
 <style>
   .lead {
     font-family: var(--serif);
@@ -90,84 +46,25 @@ const links = [
     margin-bottom: 24px;
   }
 
-  .mail-form {
-    display: grid;
-    gap: 16px;
-    margin-bottom: 28px;
+  .cta {
+    margin: 0 0 32px;
   }
 
-  .field {
-    display: grid;
-    gap: 6px;
-  }
-
-  label {
-    font-size: 0.95rem;
-    font-weight: 600;
-  }
-
-  input,
-  textarea {
-    font: inherit;
-    color: var(--text);
-    background: var(--bg);
-    border: 0;
-    border-radius: 12px;
-    box-shadow: var(--inset);
-    padding: 12px 14px;
-    width: 100%;
-    resize: vertical;
-  }
-
-  input::placeholder {
-    color: var(--muted);
-  }
-
-  [aria-invalid='true'] {
-    outline: 2px solid var(--accent);
-  }
-
-  .status {
-    margin: 0;
-    min-height: 1.5em;
-    font-size: 0.95rem;
-  }
-
-  .status[data-state='ok'] {
-    color: var(--leaf);
-  }
-
-  .status[data-state='error'] {
-    color: var(--accent);
-  }
-
-  .actions {
-    display: flex;
-    flex-wrap: wrap;
+  .mail-btn {
+    display: inline-flex;
     align-items: center;
-    gap: 10px 16px;
-  }
-
-  button {
-    font: inherit;
+    min-height: 48px;
+    padding: 0 24px;
+    border-radius: 12px;
     font-weight: 600;
+    text-decoration: none;
     color: var(--bg);
     background: var(--accent);
-    border: 0;
-    border-radius: 12px;
-    min-height: 48px;
-    padding: 0 22px;
     box-shadow: var(--raised-sm);
-    cursor: pointer;
   }
 
-  button:active {
+  .mail-btn:active {
     box-shadow: inset 3px 3px 7px rgb(0 0 0 / 0.25);
-  }
-
-  .hint {
-    font-size: 0.875rem;
-    color: var(--muted);
   }
 
   .links {
