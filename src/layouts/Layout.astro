@@ -6,10 +6,9 @@ import { profile } from '../data/profile';
 
 interface Props {
   title?: string;
-  next?: { href: string; label: string };
 }
 
-const { title, next } = Astro.props;
+const { title } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const pageTitle = title ? `${title} | ${profile.nameEN}` : `${profile.nameEN} | ${profile.program}`;
 const description = `Portfolio of ${profile.nameEN}, ${profile.program} student at ${profile.university}.`;
@@ -55,16 +54,6 @@ const description = `Portfolio of ${profile.nameEN}, ${profile.program} student 
     <Header />
     <main id="main" class="wrap">
       <slot />
-      {
-        next && (
-          <nav class="next" aria-label="Next page">
-            <a class="panel" href={next.href}>
-              <span class="next-hint">Next</span>
-              <span class="next-label">{next.label}</span>
-            </a>
-          </nav>
-        )
-      }
     </main>
     <footer class="wrap footer">
       <p>© 2026 {profile.nameEN}. Built with Astro, with Claude (Anthropic) as an AI coding collaborator.</p>
@@ -74,39 +63,6 @@ const description = `Portfolio of ${profile.nameEN}, ${profile.program} student 
 </html>
 
 <style>
-  .next {
-    display: flex;
-    justify-content: flex-end;
-    padding: 8px 0 64px;
-  }
-
-  .next a {
-    display: inline-flex;
-    flex-direction: column;
-    min-width: 220px;
-    padding: 16px 24px;
-    text-decoration: none;
-    color: var(--text);
-  }
-
-  .next a:hover .next-label {
-    color: var(--accent);
-  }
-
-  .next a:active {
-    box-shadow: var(--inset);
-  }
-
-  .next-hint {
-    font-size: 0.85rem;
-    color: var(--muted);
-  }
-
-  .next-label {
-    font-family: var(--serif);
-    font-size: 1.25rem;
-  }
-
   .footer {
     border-top: 1px solid var(--line);
     padding-top: 24px;
