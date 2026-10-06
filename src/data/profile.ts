@@ -103,5 +103,5 @@ export const projects = [
 export const contact = {
   email: 'luigithoriq@gmail.com',
   linkedin: 'https://www.linkedin.com/in/luigithoriq',
-  github: '', // e.g. 'https://github.com/your-username'
+  github: 'https://github.com/luigithoriq',
 };
