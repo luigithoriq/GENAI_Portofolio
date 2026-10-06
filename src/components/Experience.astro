@@ -13,7 +13,7 @@ const groups = [
   <div class="body">
     {
       groups.map((g) => (
-        <div class="group">
+        <div class="group panel">
           <h3 class="group-title">{g.heading}</h3>
           <ol class="timeline">
             {g.items.map((item) => (
@@ -29,7 +29,7 @@ const groups = [
       ))
     }
 
-    <div class="extras">
+    <div class="extras panel">
       <div>
         <h3 class="group-title">Certifications</h3>
         <ul>{extras.certifications.map((c) => <li>{c}</li>)}</ul>
@@ -44,7 +44,7 @@ const groups = [
 
 <style>
   .group + .group {
-    margin-top: 40px;
+    margin-top: 28px;
   }
 
   .group-title {
@@ -55,12 +55,23 @@ const groups = [
     margin-bottom: 16px;
   }
 
-  /* The timeline line and dots are the page's main visual element. */
   .timeline {
     list-style: none;
     margin: 0;
     padding: 0 0 0 26px;
-    border-left: 2px solid var(--line);
+    position: relative;
+  }
+
+  /* The timeline is a groove pressed into the panel, with raised dots along it. */
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 4px;
+    bottom: 4px;
+    width: 6px;
+    border-radius: 3px;
+    box-shadow: var(--inset);
   }
 
   .timeline li {
@@ -75,17 +86,18 @@ const groups = [
   .timeline li::before {
     content: '';
     position: absolute;
-    left: -33px;
-    top: 6px;
-    width: 12px;
-    height: 12px;
+    left: -31px;
+    top: 5px;
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
     background: var(--bg);
-    border: 2px solid var(--accent);
+    box-shadow: var(--raised-sm);
   }
 
   .timeline li:first-child::before {
     background: var(--accent);
+    box-shadow: var(--raised-sm), inset 0 0 0 4px var(--bg);
   }
 
   .period {
@@ -114,9 +126,7 @@ const groups = [
   .extras {
     display: grid;
     gap: 24px;
-    margin-top: 44px;
-    padding-top: 28px;
-    border-top: 1px dashed var(--line);
+    margin-top: 28px;
   }
 
   .extras ul {

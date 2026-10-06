@@ -1,28 +1,33 @@
-/* Warm paper tones with one brick accent: calm and academic rather than "tech". */
+/* Neumorphism on a warm clay tone: surfaces share the page color and are shaped only by
+   a light and a dark shadow. One brick accent keeps it academic rather than "tech". */
 :root {
-  --bg: #fbfaf7;
-  --surface: #f3f0ea;
+  --bg: #ece8e1;
   --text: #1f1d1a;
-  --muted: #5c574f;
-  --line: #e2ddd3;
+  --muted: #57514a;
+  --line: #d6d0c6;
   --accent: #9c3d25;
-  --accent-soft: #f4e4dc;
+  --shadow-light: #ffffff;
+  --shadow-dark: #c9c2b6;
 
   --serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
   --sans: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
 
-  --header-h: 60px;
+  --raised: 7px 7px 16px var(--shadow-dark), -7px -7px 16px var(--shadow-light);
+  --raised-sm: 3px 3px 7px var(--shadow-dark), -3px -3px 7px var(--shadow-light);
+  --inset: inset 3px 3px 7px var(--shadow-dark), inset -3px -3px 7px var(--shadow-light);
+
+  --header-h: 64px;
   color-scheme: light;
 }
 
 :root[data-theme='dark'] {
-  --bg: #191816;
-  --surface: #23211e;
+  --bg: #262421;
   --text: #ece7df;
-  --muted: #aaa397;
-  --line: #36332e;
-  --accent: #e3906f;
-  --accent-soft: #3a2820;
+  --muted: #b0a99d;
+  --line: #34312d;
+  --accent: #e8987a;
+  --shadow-light: #32302c;
+  --shadow-dark: #191816;
   color-scheme: dark;
 }
 
@@ -93,13 +98,26 @@ img {
   padding: 0 20px;
 }
 
+/* A raised panel: the main neumorphic building block. */
+.panel {
+  background: var(--bg);
+  border-radius: 18px;
+  box-shadow: var(--raised);
+  padding: 24px 20px;
+}
+
+@media (min-width: 760px) {
+  .panel {
+    padding: 32px 36px;
+  }
+}
+
 /* Each section reads like a CV entry: the label sits in the left margin on wide screens. */
 .section {
   display: grid;
   grid-template-columns: 1fr;
   gap: 12px;
   padding: 56px 0;
-  border-top: 1px solid var(--line);
 }
 
 .section-label {
@@ -129,9 +147,9 @@ img {
 
 .tags li {
   font-size: 0.875rem;
-  padding: 2px 10px;
-  border-radius: 4px;
-  background: var(--surface);
+  padding: 3px 12px;
+  border-radius: 8px;
+  box-shadow: var(--inset);
   color: var(--muted);
 }
 

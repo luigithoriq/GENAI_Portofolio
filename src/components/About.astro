@@ -75,9 +75,9 @@ const initials = profile.nameEN
     flex-wrap: wrap;
     gap: 8px 28px;
     margin: 0 0 22px;
-    padding: 12px 0;
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
+    padding: 12px 18px;
+    border-radius: 12px;
+    box-shadow: var(--inset);
   }
 
   .facts dt {
@@ -98,15 +98,19 @@ const initials = profile.nameEN
     margin-top: 20px;
   }
 
+  /* The photo sits in a raised frame with the image pressed into it. */
   .photo {
     justify-self: start;
+    padding: 14px;
+    border-radius: 22px;
+    box-shadow: var(--raised);
   }
 
   .photo img,
   .placeholder {
     width: 200px;
     aspect-ratio: 4 / 5;
-    border-radius: 6px;
+    border-radius: 12px;
     object-fit: cover;
   }
 
@@ -116,7 +120,7 @@ const initials = profile.nameEN
     align-items: center;
     justify-content: center;
     gap: 6px;
-    background: var(--accent-soft);
+    box-shadow: var(--inset);
     color: var(--accent);
   }
 

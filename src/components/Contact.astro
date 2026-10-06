@@ -13,7 +13,7 @@ const links = [
 
   <div>
     <p class="lead">I am happy to talk about research, course projects, or part-time work in AI and data. Email is the fastest way to reach me.</p>
-    <dl class="links">
+    <dl class="links panel">
       {
         links.map((l) => (
           <div>
@@ -48,6 +48,10 @@ const links = [
     gap: 12px;
     padding: 10px 0;
     border-bottom: 1px solid var(--line);
+  }
+
+  .links div:last-child {
+    border-bottom: 0;
   }
 
   dt {

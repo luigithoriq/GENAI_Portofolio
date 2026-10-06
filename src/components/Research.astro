@@ -5,7 +5,7 @@ import { research } from '../data/profile';
 <section id="research" class="section" aria-labelledby="research-title">
   <h2 id="research-title" class="section-label">Research</h2>
 
-  <article class="paper">
+  <article class="paper panel">
     <p class="meta">{research.period} · {research.lab}</p>
     <h3>{research.title}</h3>
     <p class="summary">{research.summary}</p>
@@ -24,11 +24,10 @@ import { research } from '../data/profile';
 </section>
 
 <style>
-  /* Research is the one featured block, so it gets the tinted background. */
+  /* Research is the featured block: a larger, deeper raised panel. */
   .paper {
-    background: var(--surface);
-    border-radius: 8px;
-    padding: 24px 20px;
+    box-shadow: 10px 10px 24px var(--shadow-dark), -10px -10px 24px var(--shadow-light);
+    border-top: 4px solid var(--accent);
   }
 
   h3 {
@@ -56,17 +55,8 @@ import { research } from '../data/profile';
     margin-top: 4px;
   }
 
-  .tags li {
-    background: var(--bg);
-  }
-
   .more {
     margin: 20px 0 0;
   }
 
-  @media (min-width: 760px) {
-    .paper {
-      padding: 36px 40px;
-    }
-  }
 </style>

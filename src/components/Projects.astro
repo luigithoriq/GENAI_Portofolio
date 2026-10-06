@@ -8,7 +8,7 @@ import { projects } from '../data/profile';
   <div class="list">
     {
       projects.map((p) => (
-        <article class="project">
+        <article class="project panel">
           <p class="meta">{p.context}</p>
           <h3>{p.title}</h3>
           <p class="subtitle">{p.subtitle}</p>
@@ -29,9 +29,7 @@ import { projects } from '../data/profile';
 
 <style>
   .project + .project {
-    margin-top: 36px;
-    padding-top: 36px;
-    border-top: 1px solid var(--line);
+    margin-top: 28px;
   }
 
   h3 {
