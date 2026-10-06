@@ -3,7 +3,7 @@
 
 export const profile = {
   nameEN: 'Luigi Thoriq Kholis',
-  nameCN: '', // Chinese name, required by the assignment. Fill in, e.g. '路易吉'
+  nameCN: '路易吉',
   studentId: 'M1461038',
   program: 'M.S. in Artificial Intelligence',
   university: 'Chang Gung University',

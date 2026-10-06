@@ -1,0 +1,10 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Experience from '../components/Experience.astro';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<Layout title="Education & Experience" next={{ href: `${base}research/`, label: "Research" }}>
+  <Experience />
+</Layout>

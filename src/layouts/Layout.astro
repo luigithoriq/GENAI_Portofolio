@@ -1,9 +1,17 @@
 ---
+import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
+import Header from '../components/Header.astro';
 import { profile } from '../data/profile';
 
+interface Props {
+  title?: string;
+  next?: { href: string; label: string };
+}
+
+const { title, next } = Astro.props;
 const base = import.meta.env.BASE_URL;
-const title = `${profile.nameEN} | ${profile.program}`;
+const pageTitle = title ? `${title} | ${profile.nameEN}` : `${profile.nameEN} | ${profile.program}`;
 const description = `Portfolio of ${profile.nameEN}, ${profile.program} student at ${profile.university}.`;
 ---
 
@@ -20,21 +28,94 @@ const description = `Portfolio of ${profile.nameEN}, ${profile.program} student 
       href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap"
       rel="stylesheet"
     />
-    <title>{title}</title>
-    <!-- Set the theme before the page paints so there is no flash of the wrong colors. -->
+    <title>{pageTitle}</title>
+    <!-- Set the theme before the page paints, and again after each page swap, so there is no flash of the wrong colors. -->
     <script is:inline>
       (function () {
-        var saved = null;
-        try {
-          saved = localStorage.getItem('theme');
-        } catch (e) {}
-        var dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
-        document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        function applyTheme() {
+          var saved = null;
+          try {
+            saved = localStorage.getItem('theme');
+          } catch (e) {}
+          var dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        }
+        applyTheme();
+        if (!window.__themeSwapHook) {
+          window.__themeSwapHook = true;
+          document.addEventListener('astro:after-swap', applyTheme);
+        }
       })();
     </script>
+    <!-- Soft cross-fade between pages keeps the reader oriented when moving through the menu. -->
+    <ClientRouter />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
-    <slot />
+    <Header />
+    <main id="main" class="wrap">
+      <slot />
+      {
+        next && (
+          <nav class="next" aria-label="Next page">
+            <a class="panel" href={next.href}>
+              <span class="next-hint">Next</span>
+              <span class="next-label">{next.label}</span>
+            </a>
+          </nav>
+        )
+      }
+    </main>
+    <footer class="wrap footer">
+      <p>© 2026 {profile.nameEN}. Built with Astro, with Claude (Anthropic) as an AI coding collaborator.</p>
+      <p>Typefaces: Source Serif 4 and Source Sans 3 by Adobe, SIL Open Font License, via Google Fonts.</p>
+    </footer>
   </body>
 </html>
+
+<style>
+  .next {
+    display: flex;
+    justify-content: flex-end;
+    padding: 8px 0 64px;
+  }
+
+  .next a {
+    display: inline-flex;
+    flex-direction: column;
+    min-width: 220px;
+    padding: 16px 24px;
+    text-decoration: none;
+    color: var(--text);
+  }
+
+  .next a:hover .next-label {
+    color: var(--accent);
+  }
+
+  .next a:active {
+    box-shadow: var(--inset);
+  }
+
+  .next-hint {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  .next-label {
+    font-family: var(--serif);
+    font-size: 1.25rem;
+  }
+
+  .footer {
+    border-top: 1px solid var(--line);
+    padding-top: 24px;
+    padding-bottom: 40px;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .footer p {
+    margin: 0 0 6px;
+  }
+</style>

@@ -1,18 +1,20 @@
 ---
 import { profile } from '../data/profile';
 
+const base = import.meta.env.BASE_URL;
 const links = [
-  { href: '#about', label: 'About' },
-  { href: '#experience', label: 'Education & Experience' },
-  { href: '#research', label: 'Research' },
-  { href: '#projects', label: 'Projects' },
-  { href: '#contact', label: 'Contact' },
+  { href: base, label: 'About' },
+  { href: `${base}experience/`, label: 'Education & Experience' },
+  { href: `${base}research/`, label: 'Research' },
+  { href: `${base}projects/`, label: 'Projects' },
+  { href: `${base}contact/`, label: 'Contact' },
 ];
+const here = Astro.url.pathname.replace(/\/?$/, '/');
 ---
 
 <header class="site-header">
   <div class="wrap bar">
-    <a class="brand" href="#about">{profile.nameEN}</a>
+    <a class="brand" href={base}>{profile.nameEN}</a>
 
     <div class="controls">
       <button class="theme-toggle" type="button" aria-label="Switch to dark mode">
@@ -30,7 +32,7 @@ const links = [
     <nav id="site-nav" class="nav" aria-label="Sections">
       <ul>
         {links.map((l) => (
-          <li><a href={l.href}>{l.label}</a></li>
+          <li><a href={l.href} aria-current={here === l.href ? 'page' : undefined}>{l.label}</a></li>
         ))}
       </ul>
     </nav>
@@ -38,40 +40,43 @@ const links = [
 </header>
 
 <script>
-  const root = document.documentElement;
-  const themeBtn = document.querySelector<HTMLButtonElement>('.theme-toggle')!;
-  const menuBtn = document.querySelector<HTMLButtonElement>('.menu-toggle')!;
-  const nav = document.getElementById('site-nav')!;
+  // With page transitions the header is swapped on every navigation, so bind controls on each page load.
+  document.addEventListener('astro:page-load', () => {
+    const root = document.documentElement;
+    const themeBtn = document.querySelector<HTMLButtonElement>('.theme-toggle')!;
+    const menuBtn = document.querySelector<HTMLButtonElement>('.menu-toggle')!;
+    const nav = document.getElementById('site-nav')!;
 
-  function syncThemeLabel() {
-    const dark = root.dataset.theme === 'dark';
-    themeBtn.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
-  }
-  syncThemeLabel();
-
-  themeBtn.addEventListener('click', () => {
-    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
-    root.dataset.theme = next;
-    try {
-      localStorage.setItem('theme', next);
-    } catch {}
+    const syncThemeLabel = () => {
+      const dark = root.dataset.theme === 'dark';
+      themeBtn.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+    };
     syncThemeLabel();
-  });
 
-  function setMenu(open: boolean) {
-    menuBtn.setAttribute('aria-expanded', String(open));
-    nav.classList.toggle('open', open);
-  }
+    themeBtn.addEventListener('click', () => {
+      const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      root.dataset.theme = next;
+      try {
+        localStorage.setItem('theme', next);
+      } catch {}
+      syncThemeLabel();
+    });
 
-  menuBtn.addEventListener('click', () => setMenu(menuBtn.getAttribute('aria-expanded') !== 'true'));
-  nav.addEventListener('click', (e) => {
-    if ((e.target as HTMLElement).closest('a')) setMenu(false);
-  });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && nav.classList.contains('open')) {
-      setMenu(false);
-      menuBtn.focus();
-    }
+    const setMenu = (open: boolean) => {
+      menuBtn.setAttribute('aria-expanded', String(open));
+      nav.classList.toggle('open', open);
+    };
+
+    menuBtn.addEventListener('click', () => setMenu(menuBtn.getAttribute('aria-expanded') !== 'true'));
+    nav.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        setMenu(false);
+        menuBtn.focus();
+      }
+    });
+    menuBtn.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') setMenu(false);
+    });
   });
 </script>
 
@@ -162,8 +167,13 @@ const links = [
     text-decoration: none;
   }
 
-  .nav a:hover {
+  .nav a:hover,
+  .nav a[aria-current='page'] {
     color: var(--accent);
+  }
+
+  .nav a[aria-current='page'] {
+    font-weight: 600;
   }
 
   @media (min-width: 900px) {

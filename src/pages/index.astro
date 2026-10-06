@@ -1,39 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
 import About from '../components/About.astro';
-import Experience from '../components/Experience.astro';
-import Research from '../components/Research.astro';
-import Projects from '../components/Projects.astro';
-import Contact from '../components/Contact.astro';
-import { profile } from '../data/profile';
+
+const base = import.meta.env.BASE_URL;
 ---
 
-<Layout>
-  <Header />
-  <main id="main" class="wrap">
-    <About />
-    <Experience />
-    <Research />
-    <Projects />
-    <Contact />
-  </main>
-  <footer class="wrap footer">
-    <p>© 2026 {profile.nameEN}. Built with Astro, with Claude (Anthropic) as an AI coding collaborator.</p>
-    <p>Typefaces: Source Serif 4 and Source Sans 3 by Adobe, SIL Open Font License, via Google Fonts.</p>
-  </footer>
+<Layout next={{ href: `${base}experience/`, label: 'Education & Experience' }}>
+  <About />
 </Layout>
-
-<style>
-  .footer p {
-    margin: 0 0 6px;
-  }
-
-  .footer {
-    border-top: 1px solid var(--line);
-    padding-top: 24px;
-    padding-bottom: 40px;
-    color: var(--muted);
-    font-size: 0.9rem;
-  }
-</style>
