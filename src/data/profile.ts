@@ -9,7 +9,7 @@ export const profile = {
   university: 'Chang Gung University',
   location: 'Taoyuan, Taiwan',
   // Put your photo in public/images/ and write the file name here, e.g. 'images/photo.jpg'
-  photo: '',
+  photo: 'images/photo.jpg',
   bio: [
     'I am a master’s student in Artificial Intelligence at Chang Gung University and a research assistant at the university’s AI Center, where I fine-tune Qwen large language models.',
     'Before moving to Taiwan, I studied Informatics Engineering in Cirebon, Indonesia, and spent two and a half years keeping a university’s IT systems and academic data in order. I still enjoy building small web applications on the side.',

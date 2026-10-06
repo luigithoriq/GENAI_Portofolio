@@ -1,13 +1,14 @@
-/* Neumorphism on a warm clay tone: surfaces share the page color and are shaped only by
-   a light and a dark shadow. One brick accent keeps it academic rather than "tech". */
+/* Neumorphism: surfaces share the page color and are shaped only by a light and a dark shadow.
+   Palette sampled from the portrait: cream wall, oak door frame (accent), pothos-leaf olive (current/active). */
 :root {
-  --bg: #ece8e1;
-  --text: #1f1d1a;
-  --muted: #57514a;
-  --line: #d6d0c6;
-  --accent: #9c3d25;
-  --shadow-light: #ffffff;
-  --shadow-dark: #c9c2b6;
+  --bg: #ece4d6;
+  --text: #1f1c17;
+  --muted: #574f43;
+  --line: #d5cab7;
+  --accent: #7a5228;
+  --leaf: #4f5f2a;
+  --shadow-light: #fbf6ec;
+  --shadow-dark: #cdc0aa;
 
   --serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
   --sans: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
@@ -21,13 +22,15 @@
 }
 
 :root[data-theme='dark'] {
-  --bg: #262421;
-  --text: #ece7df;
-  --muted: #b0a99d;
-  --line: #34312d;
-  --accent: #e8987a;
-  --shadow-light: #32302c;
-  --shadow-dark: #191816;
+  /* Dark mode takes the jacket's near-black, lit by the photo's golden sunlight. */
+  --bg: #23211d;
+  --text: #ede5d6;
+  --muted: #b3a993;
+  --line: #36322b;
+  --accent: #d9b27a;
+  --leaf: #a9b779;
+  --shadow-light: #2f2c27;
+  --shadow-dark: #181714;
   color-scheme: dark;
 }
 

@@ -31,7 +31,7 @@ const initials = profile.nameEN
   <div class="photo">
     {
       profile.photo ? (
-        <img src={`${base}${profile.photo}`} alt={`Portrait of ${profile.nameEN}`} width="240" height="300" />
+        <img src={`${base}${profile.photo}`} alt={`Portrait of ${profile.nameEN}`} width="240" height="300" loading="eager" />
       ) : (
         <div class="placeholder" role="img" aria-label="Photo placeholder">
           <span aria-hidden="true">{initials}</span>
@@ -112,6 +112,7 @@ const initials = profile.nameEN
     aspect-ratio: 4 / 5;
     border-radius: 12px;
     object-fit: cover;
+    object-position: 50% 38%;
   }
 
   .placeholder {
