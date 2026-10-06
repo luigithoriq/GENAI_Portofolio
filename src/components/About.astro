@@ -1,0 +1,150 @@
+---
+import { profile } from '../data/profile';
+
+const base = import.meta.env.BASE_URL;
+const initials = profile.nameEN
+  .split(' ')
+  .map((w) => w[0])
+  .slice(0, 2)
+  .join('');
+---
+
+<section id="about" class="about" aria-labelledby="about-name">
+  <div class="text">
+    <h1 id="about-name">
+      {profile.nameEN}
+      {profile.nameCN && <span class="cn" lang="zh-Hant">{profile.nameCN}</span>}
+    </h1>
+    <p class="role">
+      {profile.program}, {profile.university}
+    </p>
+    <dl class="facts">
+      <div><dt>Student ID</dt><dd>{profile.studentId}</dd></div>
+      <div><dt>Based in</dt><dd>{profile.location}</dd></div>
+    </dl>
+    {profile.bio.map((p) => <p class="bio">{p}</p>)}
+    <ul class="tags" aria-label="Interests">
+      {profile.interests.map((i) => <li>{i}</li>)}
+    </ul>
+  </div>
+
+  <div class="photo">
+    {
+      profile.photo ? (
+        <img src={`${base}${profile.photo}`} alt={`Portrait of ${profile.nameEN}`} width="240" height="300" />
+      ) : (
+        <div class="placeholder" role="img" aria-label="Photo placeholder">
+          <span aria-hidden="true">{initials}</span>
+          <small>Photo coming soon</small>
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .about {
+    display: grid;
+    gap: 32px;
+    padding: 48px 0 56px;
+  }
+
+  h1 {
+    font-size: clamp(2.1rem, 6vw, 3.1rem);
+    letter-spacing: -0.01em;
+  }
+
+  .cn {
+    display: block;
+    font-weight: 400;
+    font-size: 0.6em;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  .role {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--accent);
+    margin: 14px 0 18px;
+  }
+
+  .facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 28px;
+    margin: 0 0 22px;
+    padding: 12px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .facts dt {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  .facts dd {
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .bio {
+    max-width: 60ch;
+  }
+
+  .tags {
+    margin-top: 20px;
+  }
+
+  .photo {
+    justify-self: start;
+  }
+
+  .photo img,
+  .placeholder {
+    width: 200px;
+    aspect-ratio: 4 / 5;
+    border-radius: 6px;
+    object-fit: cover;
+  }
+
+  .placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+
+  .placeholder span {
+    font-family: var(--serif);
+    font-size: 3rem;
+  }
+
+  .placeholder small {
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+
+  @media (min-width: 760px) {
+    .about {
+      grid-template-columns: 1fr 240px;
+      gap: 56px;
+      padding: 88px 0 72px;
+      align-items: start;
+    }
+
+    .photo {
+      justify-self: end;
+    }
+
+    .photo img,
+    .placeholder {
+      width: 240px;
+    }
+  }
+</style>

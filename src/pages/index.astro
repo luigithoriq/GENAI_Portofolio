@@ -1,0 +1,34 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import About from '../components/About.astro';
+import Experience from '../components/Experience.astro';
+import Research from '../components/Research.astro';
+import Projects from '../components/Projects.astro';
+import Contact from '../components/Contact.astro';
+import { profile } from '../data/profile';
+---
+
+<Layout>
+  <Header />
+  <main id="main" class="wrap">
+    <About />
+    <Experience />
+    <Research />
+    <Projects />
+    <Contact />
+  </main>
+  <footer class="wrap footer">
+    <p>© 2026 {profile.nameEN}. Built with Astro.</p>
+  </footer>
+</Layout>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--line);
+    padding-top: 24px;
+    padding-bottom: 40px;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+</style>

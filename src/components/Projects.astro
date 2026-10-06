@@ -1,0 +1,56 @@
+---
+import { projects } from '../data/profile';
+---
+
+<section id="projects" class="section" aria-labelledby="projects-title">
+  <h2 id="projects-title" class="section-label">Projects</h2>
+
+  <div class="list">
+    {
+      projects.map((p) => (
+        <article class="project">
+          <p class="meta">{p.context}</p>
+          <h3>{p.title}</h3>
+          <p class="subtitle">{p.subtitle}</p>
+          <p>{p.description}</p>
+          <ul class="tags" aria-label="Tools">
+            {p.tools.map((t) => <li>{t}</li>)}
+          </ul>
+          {p.link && (
+            <p class="more">
+              <a href={p.link} target="_blank" rel="noopener">View {p.title}</a>
+            </p>
+          )}
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .project + .project {
+    margin-top: 36px;
+    padding-top: 36px;
+    border-top: 1px solid var(--line);
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    margin-top: 2px;
+  }
+
+  .subtitle {
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--muted);
+    margin: 4px 0 12px;
+  }
+
+  .project p {
+    max-width: 62ch;
+  }
+
+  .more {
+    margin: 16px 0 0;
+  }
+</style>

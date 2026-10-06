@@ -1,0 +1,61 @@
+---
+import { contact } from '../data/profile';
+
+const links = [
+  { label: 'Email', href: contact.email && `mailto:${contact.email}`, text: contact.email },
+  { label: 'LinkedIn', href: contact.linkedin, text: contact.linkedin.replace(/^https?:\/\/(www\.)?/, '') },
+  { label: 'GitHub', href: contact.github, text: contact.github.replace(/^https?:\/\//, '') },
+].filter((l) => l.href);
+---
+
+<section id="contact" class="section" aria-labelledby="contact-title">
+  <h2 id="contact-title" class="section-label">Contact</h2>
+
+  <div>
+    <p class="lead">I am happy to talk about research, course projects, or part-time work in AI and data. Email is the fastest way to reach me.</p>
+    <dl class="links">
+      {
+        links.map((l) => (
+          <div>
+            <dt>{l.label}</dt>
+            <dd>
+              <a href={l.href} {...(l.href.startsWith('http') ? { target: '_blank', rel: 'noopener' } : {})}>
+                {l.text}
+              </a>
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</section>
+
+<style>
+  .lead {
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    max-width: 44ch;
+    margin-bottom: 24px;
+  }
+
+  .links {
+    margin: 0;
+  }
+
+  .links div {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  dt {
+    color: var(--muted);
+  }
+
+  dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+</style>
