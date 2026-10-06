@@ -19,11 +19,16 @@ import { profile } from '../data/profile';
     <Contact />
   </main>
   <footer class="wrap footer">
-    <p>© 2026 {profile.nameEN}. Built with Astro.</p>
+    <p>© 2026 {profile.nameEN}. Built with Astro, with Claude (Anthropic) as an AI coding collaborator.</p>
+    <p>Typefaces: Source Serif 4 and Source Sans 3 by Adobe, SIL Open Font License, via Google Fonts.</p>
   </footer>
 </Layout>
 
 <style>
+  .footer p {
+    margin: 0 0 6px;
+  }
+
   .footer {
     border-top: 1px solid var(--line);
     padding-top: 24px;
