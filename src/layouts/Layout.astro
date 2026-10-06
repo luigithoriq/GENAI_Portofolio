@@ -63,12 +63,25 @@ const description = `Portfolio of ${profile.nameEN}, ${profile.program} student 
 </html>
 
 <style>
+  /* Footer sits at the very bottom even on short pages (body is a full-height column). */
+  body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1;
+  }
+
   .footer {
+    margin-top: 48px;
     border-top: 1px solid var(--line);
-    padding-top: 24px;
-    padding-bottom: 40px;
+    padding-top: 28px;
+    padding-bottom: 36px;
     color: var(--muted);
     font-size: 0.9rem;
+    text-align: center;
   }
 
   .footer p {
